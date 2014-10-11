@@ -3,36 +3,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml">
-        <ui:define name="title">
-            <h:outputText value="#{bundle.ViewNombresTitle}"></h:outputText>
-        </ui:define>
-        <ui:define name="body">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
-            <h:form>
-                <h:panelGrid columns="2">
-                    <h:outputText value="#{bundle.ViewNombresLabel_nombre}"/>
-                    <h:outputText value="#{nombresController.selected.nombre}" title="#{bundle.ViewNombresTitle_nombre}"/>
-                </h:panelGrid>
-                <br />
-                <h:commandLink action="#{nombresController.destroyAndView}" value="#{bundle.ViewNombresDestroyLink}"/>
-                <br />
-                <br />
-                <h:link outcome="Edit" value="#{bundle.ViewNombresEditLink}"/>
-                <br />
-                <h:commandLink action="#{nombresController.prepareCreate}" value="#{bundle.ViewNombresCreateLink}" />
-                <br />
-                <h:commandLink action="#{nombresController.prepareList}" value="#{bundle.ViewNombresShowAllLink}"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.ViewNombresIndexLink}"/>
+    <ui:composition>
 
+        <p:dialog id="NombresViewDlg" widgetVar="NombresViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewNombresTitle}">
+            <h:form id="NombresViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{nombresController.selected != null}">
+                        <h:outputText value="#{bundle.ViewNombresLabel_nombre}"/>
+                        <h:outputText value="#{nombresController.selected.nombre}" title="#{bundle.ViewNombresTitle_nombre}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="NombresViewDialog.hide()"/>
+                </h:panelGroup>
             </h:form>
-        </ui:define>
-    </ui:composition>
+        </p:dialog>
 
+    </ui:composition>
 </html>
